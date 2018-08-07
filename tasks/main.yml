@@ -1,0 +1,40 @@
+---
+- name: Install bash-completion to support CYA
+  apt:
+    name: bash-completion
+    state: present
+
+- name: Get git repo for CYA
+  git:
+    dest: /opt/cya
+    repo: "https://github.com/cleverwise/cya"
+  notify: Start CYA Service
+
+- name: Copy CYA binary to /usr/local/bin
+  copy:
+    src: /opt/cya/cya
+    dest: /usr/local/bin/cya
+    mode: 0755
+    owner: root
+    group: root
+  notify: Start CYA Service
+
+- name: Copy bash-completion script to /etc/bash_completion.d
+  copy:
+    src: /opt/cya/cya_completion
+    dest: /etc/bash_completion.d/cya_completion
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Copy SystemD unit files
+  copy:
+    src: "/opt/cya/systemd/cya.{{ item }}"
+    dest: "/etc/systemd/system/cya.{{ item }}"
+    mode: 0644
+    owner: root
+    group: root
+  loop:
+  - service
+  - timer
+  notify: Start CYA Service

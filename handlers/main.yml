@@ -1,0 +1,8 @@
+---
+- name: Start CYA Service
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: cya.timer
+    state: restarted
+
