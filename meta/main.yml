@@ -32,7 +32,7 @@ galaxy_info:
   # Note, this may support more OS versions, but I've not checked :(
   platforms:
   - name: ubuntu
-    versions: 18.04
+    versions: "18.04"
 
   galaxy_tags:
   - coveryourassets
